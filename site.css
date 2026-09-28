@@ -1,5 +1,5 @@
 :root{--ink:#202522;--paper:#f4f1eb;--white:#fffdf8;--warm:#e8e3da;--rule:#c6c5be;--rust:#b65d34;--quiet:#5d665f}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.6 'Poppins',Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}img{display:block;max-width:100%}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.6 'Poppins',Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}img{display:block;max-width:100%}.skip{position:absolute;left:-999px;top:8px;z-index:20;background:var(--white);padding:10px}.skip:focus{left:8px}a:focus-visible{outline:3px solid var(--rust);outline-offset:3px}
 .wrap{width:min(100% - 48px,1180px);margin:auto}
 .nav{background:var(--white);border-bottom:1px solid var(--rule)}.nav-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .brand{font:700 27px/1 'Poppins',Arial,sans-serif;letter-spacing:-.03em;text-decoration:none}.brand .last{color:var(--rust)}
@@ -18,6 +18,9 @@ h1{font-size:clamp(36px,4.2vw,56px);line-height:1.08;letter-spacing:-.025em;marg
 h2{font-size:clamp(28px,3vw,40px);line-height:1.15;letter-spacing:-.02em;margin:0 0 24px}
 .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .card{background:var(--white);border:1px solid var(--rule);padding:24px}.card h3{margin:0 0 8px;font-size:20px}.card p{margin:0;font-size:15px;color:#3c463f}
+.coverage{background:var(--white)}.coverage p{margin-top:0}.text-link{font-weight:700;text-underline-offset:4px}.text-link:hover{color:var(--rust)}
+.related{background:var(--warm)}.related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.related-grid a{display:flex;flex-direction:column;gap:8px;background:var(--white);border:1px solid var(--rule);padding:22px;text-decoration:none}.related-grid a:hover{border-color:var(--rust);color:var(--rust)}.related-grid span{font-size:13px;color:var(--quiet)}
+.range-hero{padding:78px 0;background:var(--white);border-bottom:1px solid var(--rule)}.range-hero h1{font-size:clamp(40px,4.5vw,62px);line-height:1.08;letter-spacing:-.025em;margin:0}.range-hero .lede{margin-top:8px}.range-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.range-card{display:block;background:var(--white);border:1px solid var(--rule);padding:26px;text-decoration:none}.range-card:hover{border-color:var(--rust)}.range-card h2{font-size:23px;margin:0 0 9px}.range-card p{margin:0 0 18px;color:#3c463f}.range-card span{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--rust)}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
 .split ul{margin:0;padding-left:20px}.split li{margin:6px 0}
 .quote{background:#e7ded2}
@@ -29,5 +32,6 @@ input:focus,select:focus,textarea:focus{outline:3px solid var(--rust);outline-of
 .small{font-size:13px;color:var(--quiet)}
 details{background:var(--white);border:1px solid var(--rule);padding:16px 20px;margin-bottom:10px}summary{font-weight:700;cursor:pointer}details p{margin:10px 0 0}
 footer{background:#171e19;color:#e8ece6;padding:44px 0 28px;font-size:14px}footer a{color:#e8ece6}.foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}.foot nav{display:flex;flex-wrap:wrap;gap:8px 18px}
-@media(max-width:900px){.hero{grid-template-columns:1fr}.hero figure{min-height:240px}.cols{grid-template-columns:1fr}.split{grid-template-columns:1fr;gap:28px}}
-@media(max-width:600px){.wrap{width:min(100% - 32px,1180px)}form{grid-template-columns:1fr;padding:20px}.nav-links a:not(.solid){display:none}.hero-copy{padding:44px 16px}}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.hero figure{min-height:240px}.cols{grid-template-columns:1fr}.split{grid-template-columns:1fr;gap:28px}.related-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.range-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.wrap{width:min(100% - 32px,1180px)}form{grid-template-columns:1fr;padding:20px}.nav-links .materials-link,.nav-links>a:not(.solid):not([href^="tel:"]){display:none}.nav-links>a[href^="tel:"]{font-size:0;border:0;padding:8px}.nav-links>a[href^="tel:"]:after{content:'Call';font-size:13px}.hero-copy{padding:44px 16px}.related-grid{grid-template-columns:1fr}.range-hero{padding:54px 0}}
