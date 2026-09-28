@@ -3,7 +3,7 @@
 .wrap{width:min(100% - 48px,1180px);margin:auto}
 .nav{background:var(--white);border-bottom:1px solid var(--rule)}.nav-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .brand{font:700 27px/1 'Poppins',Arial,sans-serif;letter-spacing:-.03em;text-decoration:none}.brand .last{color:var(--rust)}
-.nav-links{display:flex;gap:10px;align-items:center;font-size:14px;font-weight:600}.nav-links a{text-decoration:none;padding:10px 16px;border:1px solid var(--ink)}.nav-links a.solid{background:var(--ink);color:#fff}.nav-links a:hover{background:var(--rust);border-color:var(--rust);color:#fff}
+.nav-links{display:flex;gap:16px;align-items:center;font-size:14px;font-weight:600}.nav-links a{text-decoration:none;padding:10px 2px;border:0}.nav-links a.solid{padding:10px 16px;border:1px solid var(--ink);background:var(--ink);color:#fff}.nav-links a:not(.solid):hover{color:var(--rust)}.nav-links a.solid:hover{background:var(--rust);border-color:var(--rust);color:#fff}
 .hero{display:grid;grid-template-columns:1.05fr .95fr;background:var(--white);border-bottom:1px solid var(--rule)}
 .hero-copy{padding:64px 6% 60px max(24px,calc((100vw - 1180px)/2))}
 .eyebrow,.label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--rust);margin:0 0 18px}
@@ -32,6 +32,7 @@ input:focus,select:focus,textarea:focus{outline:3px solid var(--rust);outline-of
 .small{font-size:13px;color:var(--quiet)}
 details{background:var(--white);border:1px solid var(--rule);padding:16px 20px;margin-bottom:10px}summary{font-weight:700;cursor:pointer}details p{margin:10px 0 0}
 footer{background:#171e19;color:#e8ece6;padding:44px 0 28px;font-size:14px}footer a{color:#e8ece6}.foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}.foot nav{display:flex;flex-wrap:wrap;gap:8px 18px}
+@media(max-width:1050px){.nav-links .section-link{display:none}}
 @media(max-width:900px){.hero{grid-template-columns:1fr}.hero figure{min-height:240px}.cols{grid-template-columns:1fr}.split{grid-template-columns:1fr;gap:28px}.related-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){.range-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.wrap{width:min(100% - 32px,1180px)}form{grid-template-columns:1fr;padding:20px}.nav-links .materials-link,.nav-links>a:not(.solid):not([href^="tel:"]){display:none}.nav-links>a[href^="tel:"]{font-size:0;border:0;padding:8px}.nav-links>a[href^="tel:"]:after{content:'Call';font-size:13px}.hero-copy{padding:44px 16px}.related-grid{grid-template-columns:1fr}.range-hero{padding:54px 0}}
