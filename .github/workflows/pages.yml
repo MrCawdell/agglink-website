@@ -31,7 +31,13 @@ jobs:
           cat .video-parts/quarry-conveyor.mp4.b64.part-* > quarry-conveyor.mp4.b64
           base64 --decode quarry-conveyor.mp4.b64 > quarry-conveyor.mp4
           mkdir _site
-          cp index.html .nojekyll *.jpg *.webp *.mp4 _site/
+          rsync -a \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude '.video-parts' \
+            --exclude '_site' \
+            --exclude '*.b64*' \
+            ./ _site/
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
