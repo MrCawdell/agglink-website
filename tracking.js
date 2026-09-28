@@ -1,7 +1,7 @@
 /* AggLink tracking: Consent Mode v2 + Google tag + conversion events.
    EDIT THESE 4 VALUES ONLY. Leave as-is until you have them; nothing loads while they're placeholders. */
 var AGG_CFG = {
-  GA4_ID: 'G-XXXXXXXXXX',        // GA4 > Admin > Data streams > Measurement ID
+  GA4_ID: 'G-BW6SJEDNEM',        // GA4 > Admin > Data streams > Measurement ID
   ADS_ID: 'AW-XXXXXXXXXX',       // Google Ads > Goals > Conversions > tag setup
   LEAD_LABEL: 'XXXXXXXXXXXXXXX',  // label from the "Quote form lead" conversion
   CALL_LABEL: 'XXXXXXXXXXXXXXX'   // label from the "Phone click" conversion
