@@ -1,3 +1,5 @@
+var WEB3FORMS_ACCESS_KEY = '482497ee-1e4c-46be-86a9-9f4f64d297d8';
+
 document.querySelectorAll('form.enquiry').forEach(function (form) {
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -6,11 +8,14 @@ document.querySelectorAll('form.enquiry').forEach(function (form) {
     if (!form.checkValidity()) { form.reportValidity(); return; }
     btn.disabled = true; btn.textContent = 'Sending…';
     var data = new FormData(form);
-    data.set('_subject', form.dataset.subject + ' – ' + (data.get('material') || '') + ' – ' + location.pathname);
-    data.set('_template', 'table'); data.set('_captcha', 'false'); data.set('page', location.href);
+    data.set('access_key', WEB3FORMS_ACCESS_KEY);
+    data.set('subject', form.dataset.subject + ' | ' + (data.get('material') || '') + ' | ' + location.pathname);
+    data.set('from_name', 'AggLink website');
+    data.set('page', location.href);
     try {
-      var r = await fetch('https://formsubmit.co/ajax/hello@tipperlink.com', { method: 'POST', headers: { Accept: 'application/json' }, body: data });
-      if (!r.ok) throw new Error('fail');
+      var r = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: data });
+      var result = await r.json();
+      if (!r.ok || !result.success) throw new Error(result.message || 'Submission failed');
       status.textContent = 'Thank you. Your request has been sent to the AggLink team.'; status.classList.add('success');
       if (window.agglinkTrackLead) agglinkTrackLead(form);
       form.reset();
