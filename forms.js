@@ -17,7 +17,7 @@ document.querySelectorAll('form.enquiry').forEach(function (form) {
       var r = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: data });
       var result = await r.json();
       if (!r.ok || !result.success) throw new Error(result.message || 'Submission failed');
-      status.textContent = 'Thank you. Your request has been sent to the AggLink team.'; status.classList.add('success');
+      status.textContent = 'Thank you. Your request has been sent. Someone from AggLink will be in touch within 1 hour with a price or to gather more information.'; status.classList.add('success');
       if (window.agglinkTrackLead) agglinkTrackLead(form);
       form.reset();
       status.focus();

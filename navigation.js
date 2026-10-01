@@ -7,6 +7,9 @@
         if (!dialog.open) dialog.showModal();
       });
     });
+    function openQuoteFromHash() { if (location.hash === '#quote' && !dialog.open) dialog.showModal(); }
+    openQuoteFromHash();
+    window.addEventListener('hashchange', openQuoteFromHash);
     var close = dialog.querySelector('.dialog-close');
     close.addEventListener('click', function () { dialog.close(); });
     dialog.addEventListener('click', function (event) {
@@ -39,4 +42,29 @@
     document.addEventListener('visibilitychange', updateVideo);
     reduced.addEventListener('change', updateVideo);
   }
+})();
+
+(function () {
+  var search = document.getElementById('material-search');
+  if (!search) return;
+  var cards = Array.from(document.querySelectorAll('[data-material]'));
+  var groups = Array.from(document.querySelectorAll('.material-group'));
+  var count = document.getElementById('material-count');
+  function filter() {
+    var words = search.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+    var total = 0;
+    cards.forEach(function(card) {
+      var match = words.every(function(word) { return card.textContent.toLowerCase().includes(word); });
+      card.hidden = !match;
+      if (match) total++;
+    });
+    groups.forEach(function(group) { group.hidden = !Array.from(group.querySelectorAll('[data-material]')).some(function(card) { return !card.hidden; }); });
+    count.textContent = total + (total === 1 ? ' material found' : ' materials found');
+    document.getElementById('material-empty').hidden = total > 0;
+  }
+  search.addEventListener('input', filter);
+  document.querySelectorAll('.category-jumps a').forEach(function(link) {
+    link.addEventListener('click', function() { search.value = ''; filter(); });
+  });
+  filter();
 })();
