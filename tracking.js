@@ -1,10 +1,7 @@
-/* AggLink tracking: Consent Mode v2 + Google tag + conversion events.
-   EDIT THESE 4 VALUES ONLY. Leave as-is until you have them; nothing loads while they're placeholders. */
+/* AggLink tracking. Website leads are imported from GA4 into Ads account
+   848-056-7784 (conversion 7811114045). Do not also fire a native Ads lead. */
 var AGG_CFG = {
-  GA4_ID: 'G-BW6SJEDNEM',        // GA4 > Admin > Data streams > Measurement ID
-  ADS_ID: 'AW-18450488729',       // Google Ads > Goals > Conversions > tag setup
-  LEAD_LABEL: 'TNXsCPX32IodEJm78N1E',  // label from the "Quote form lead" conversion
-  CALL_LABEL: '55CBCPj32IodEJm78N1E'   // label from the "Phone click" conversion
+  GA4_ID: 'G-BW6SJEDNEM'
 };
 (function () {
   var ready = AGG_CFG.GA4_ID.indexOf('XXXX') === -1;
@@ -31,38 +28,27 @@ var AGG_CFG = {
     document.head.appendChild(s);
     gtag('js', new Date());
     gtag('config', AGG_CFG.GA4_ID);
-    if (AGG_CFG.ADS_ID.indexOf('XXXX') === -1) gtag('config', AGG_CFG.ADS_ID, { allow_enhanced_conversions: true });
-  }
-  function adsConv(label) {
-    if (AGG_CFG.ADS_ID.indexOf('XXXX') === -1 && label.indexOf('XXXX') === -1)
-      gtag('event', 'conversion', { send_to: AGG_CFG.ADS_ID + '/' + label });
-  }
-  function ukPhone(p) {
-    p = (p || '').replace(/[^\d+]/g, '');
-    if (p.indexOf('+') === 0) return p;
-    if (p.indexOf('44') === 0) return '+' + p;
-    if (p.indexOf('0') === 0) return '+44' + p.slice(1);
-    return p;
   }
   // Called by forms after a successful send.
   window.agglinkTrackLead = function (form) {
-    var g = function (n) { var el = form.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };
-    var ud = {};
-    if (g('email')) ud.email = g('email').toLowerCase();
-    if (g('phone')) ud.phone_number = ukPhone(g('phone'));
-    gtag('set', 'user_data', ud);
-    gtag('event', 'generate_lead', { form_id: form.id || 'form', material: g('material') || '', page_path: location.pathname });
-    adsConv(AGG_CFG.LEAD_LABEL);
+    var stage = form.querySelector('[name="enquiry_stage"]');
+    gtag('event', 'generate_lead', {
+      form_id: form.id || 'form',
+      form_type: form.dataset.formType || 'quote',
+      product: form.dataset.product || 'General enquiry',
+      enquiry_stage: stage ? stage.value : '',
+      page_path: location.pathname
+    });
   };
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href^="tel:"],a[href^="mailto:"]');
     if (!a) return;
-    if (a.getAttribute('href').indexOf('tel:') === 0) { gtag('event', 'phone_click', { page_path: location.pathname }); adsConv(AGG_CFG.CALL_LABEL); }
+    if (a.getAttribute('href').indexOf('tel:') === 0) { gtag('event', 'phone_click', { page_path: location.pathname }); }
     else gtag('event', 'email_click', { page_path: location.pathname });
   });
   // Cookie banner (equal-weight accept / reject, as ICO expects).
-  function banner() {
-    if (saved) return;
+  function banner(force) {
+    if ((saved && !force) || document.querySelector('.cookie-bar')) return;
     var b = document.createElement('div');
     b.className = 'cookie-bar'; b.setAttribute('role', 'region'); b.setAttribute('aria-label', 'Cookie choice');
     b.innerHTML = '<p>We use cookies to measure enquiries from our adverts. <a href="/privacy/">Privacy and cookies</a></p>' +
@@ -74,10 +60,18 @@ var AGG_CFG = {
       var c = e.target.getAttribute && e.target.getAttribute('data-c');
       if (!c) return;
       try { localStorage.setItem('agg_consent', c); } catch (err) {}
+      saved = c;
       if (c === 'granted') grant();
+      else gtag('consent', 'update', {
+        ad_storage: 'denied', ad_user_data: 'denied',
+        ad_personalization: 'denied', analytics_storage: 'denied'
+      });
       b.remove();
     });
     document.body.appendChild(b);
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', banner); else banner();
+  document.addEventListener('click', function (event) {
+    if (event.target.closest && event.target.closest('[data-cookie-settings]')) banner(true);
+  });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { banner(false); }); else banner(false);
 })();

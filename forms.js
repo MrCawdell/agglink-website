@@ -4,6 +4,7 @@ document.querySelectorAll('form.enquiry').forEach(function (form) {
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
     var status = form.querySelector('.status'), btn = form.querySelector('[type=submit]'), orig = btn.textContent;
+    if (btn.disabled) return;
     status.className = 'status'; status.textContent = '';
     if (!form.checkValidity()) { form.reportValidity(); return; }
     btn.disabled = true; btn.textContent = 'Sending…';
@@ -19,8 +20,10 @@ document.querySelectorAll('form.enquiry').forEach(function (form) {
       status.textContent = 'Thank you. Your request has been sent to the AggLink team.'; status.classList.add('success');
       if (window.agglinkTrackLead) agglinkTrackLead(form);
       form.reset();
+      status.focus();
     } catch (err) {
       status.textContent = 'We could not send this form. Please email hello@tipperlink.com or call 01392 321840.'; status.classList.add('error');
+      status.focus();
     } finally { btn.disabled = false; btn.textContent = orig; }
   });
 });
