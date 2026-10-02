@@ -71,7 +71,7 @@
 })();
 
 (function () {
-  document.querySelectorAll('.nav a[href]').forEach(function (link) {
+  document.querySelectorAll('.nav a[href]:not(.brand)').forEach(function (link) {
     var url = new URL(link.href, location.href);
     if (url.pathname === location.pathname && !url.hash) link.setAttribute('aria-current', 'page');
   });
