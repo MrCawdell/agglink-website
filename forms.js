@@ -1,14 +1,28 @@
 var WEB3FORMS_ACCESS_KEY = '482497ee-1e4c-46be-86a9-9f4f64d297d8';
 
 document.querySelectorAll('form.enquiry').forEach(function (form) {
+  var contact = form.querySelector('[name="contact"]');
+  function validateContact() {
+    if (!contact) return;
+    var value = contact.value.trim();
+    var email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    var phone = /^[+\d\s().-]+$/.test(value) && value.replace(/\D/g, '').length >= 7;
+    contact.setCustomValidity(value && !email && !phone ? 'Please enter an email address or phone number so we can contact you.' : '');
+  }
+  if (contact) contact.addEventListener('input', validateContact);
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
     var status = form.querySelector('.status'), btn = form.querySelector('[type=submit]'), orig = btn.textContent;
     if (btn.disabled) return;
     status.className = 'status'; status.textContent = '';
+    validateContact();
     if (!form.checkValidity()) { form.reportValidity(); return; }
     btn.disabled = true; btn.textContent = 'Sending…';
     var data = new FormData(form);
+    if (contact) {
+      var contactValue = contact.value.trim();
+      data.set(contactValue.indexOf('@') >= 0 ? 'email' : 'phone', contactValue);
+    }
     data.set('access_key', WEB3FORMS_ACCESS_KEY);
     data.set('subject', form.dataset.subject + ' | ' + (data.get('material') || '') + ' | ' + location.pathname);
     data.set('from_name', 'AggLink website');
